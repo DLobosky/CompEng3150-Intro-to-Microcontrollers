@@ -1,0 +1,59 @@
+A51 MACRO ASSEMBLER  HW_3_FILE_1                                                          02/24/2015 21:31:30 PAGE     1
+
+
+MACRO ASSEMBLER A51 V6.02
+OBJECT MODULE PLACED IN .\hw_3_file_1.OBJ
+ASSEMBLER INVOKED BY: C:\Keil\C51\BIN\A51.EXE .\hw_3_file_1.a51 SET(SMALL) DEBUG EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; example for a p39-like problem 
+                       2     
+----                   3             cseg at 0
+0000 020100            4             ljmp start
+                       5     
+0003 00010409          6     table: db 0,1,4,9,16,25,36,49
+0007 10192431                
+                       7     
+----                   8             cseg at 100h
+0100 7590E0            9     start:  mov P1,#0e0h         ; make bits 5 to 7 inputs
+                      10     
+0103 E590             11     loop:   mov a,p1             ; read pl
+                      12     
+0105 7A05             13             mov r2,#5            ; shift right 5x (Acc >>5)
+0107 03               14     rotlp:  rr a
+0108 DAFD             15             djnz r2, rotlp
+                      16     
+010A 5407             17             anl a,#7             ; mask input bits
+010C 900003           18             mov dptr,#table     ; get table address
+010F 93               19             movc a,@a+dptr       ;get ith entry in table
+                      20             
+0110 A2E5             21             mov c,acc.5
+0112 92B0             22             mov P3.0,c
+                      23     
+0114 44E0             24             orl a,#0e0h          ; make high order bits = 1
+0116 F590             25             mov p1,a             ; output to pl
+0118 80E9             26             sjmp loop            ; repeat forever
+                      27     
+                      28             end
+A51 MACRO ASSEMBLER  HW_3_FILE_1                                                          02/24/2015 21:31:30 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+LOOP . . . . . . .  C ADDR   0103H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+ROTLP. . . . . . .  C ADDR   0107H   A   
+START. . . . . . .  C ADDR   0100H   A   
+TABLE. . . . . . .  C ADDR   0003H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
